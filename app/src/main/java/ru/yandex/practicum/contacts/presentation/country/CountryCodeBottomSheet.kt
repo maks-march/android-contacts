@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.yandex.practicum.contacts.R
 import ru.yandex.practicum.contacts.data.models.CountryCode
+import ru.yandex.practicum.contacts.presentation.ui.components.CommonBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +36,21 @@ fun CountryCodeBottomSheet(
     onCodesSelected: (Set<CountryCode>) -> Unit,
     onDismiss: () -> Unit
 ) {
+    CommonBottomSheet(
+        title = stringResource(R.string.filter_by_country_code),
+        items = CountryCode.COMMON_CODES,
+        selectedItems = selectedCodes,
+        onItemsSelected = onCodesSelected,
+        onDismiss = onDismiss,
+        itemContent = { countryCode, isSelected ->
+            CountryCodeOption(
+                isSelected = isSelected,
+                countryCode = countryCode,
+                selectedCodes = selectedCodes,
+                onCodesSelected = onCodesSelected
+            )
+        }
+    )
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         dragHandle = { BottomSheetDefaults.DragHandle() }
